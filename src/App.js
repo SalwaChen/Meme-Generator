@@ -1,7 +1,7 @@
 import React from "react";
-import Header from "./Header";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.scss";
+import logo from "./u-mad.png";
 
 class App extends React.Component {
   constructor() {
@@ -38,9 +38,14 @@ class App extends React.Component {
   render() {
     return (
       <div className="container">
-        <Header />
+        <div className="logo-cont">
+          <a href="#">
+            <img src={logo} alt="funny face" width="60" height="50" />{" "}
+          </a>
+          <h2>Meme Generator</h2>
+        </div>
         <main>
-          <form onSubmit={this.handleSubmit}>
+          <form onSubmit={this.handleSubmit} autocomplete="off">
             <input
               type="text"
               name="top"
