@@ -2,6 +2,8 @@ import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.scss";
 import logo from "./u-mad.png";
+import Draggable from "react-draggable";
+import { FiRefreshCw } from "react-icons/fi";
 
 class App extends React.Component {
   constructor() {
@@ -11,6 +13,7 @@ class App extends React.Component {
       bottom: "",
       url: "https://i.imgflip.com/26am.jpg",
       data: [],
+      // value: "Font-size",
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -19,7 +22,14 @@ class App extends React.Component {
     const { name, value } = event.target;
     this.setState({
       [name]: value,
+      // value: event.target.value,
     });
+    // this.setState({
+    //   value: event.target.value,
+    // });
+    // if (this.state.value === "16") {
+    //   console.log("its 16");
+    // }
   }
   componentDidMount() {
     fetch("https://api.imgflip.com/get_memes")
@@ -60,12 +70,50 @@ class App extends React.Component {
               value={this.state.bottom}
               onChange={this.handleChange}
             />
-            <button type="submit">Go!</button>
+            {/* <select
+              id="font-size"
+              value={this.state.value}
+              onChange={this.handleChange}
+            >
+              <option value="22" selected>
+                Font-size
+              </option>
+              <option value="16" onChange={()=> this.setState({state.value})}>16</option>
+              <option value="18">18</option>
+              <option value="20">20</option>
+            </select> */}
+            <button type="submit">
+              <FiRefreshCw />
+            </button>
           </form>
           <div>
             <div className="changingImage">
-              <div className="float">{this.state.top}</div>
-              <div className="float bottom">{this.state.bottom}</div>
+              <Draggable
+                axis="y"
+                handle=".handle"
+                defaultPosition={{ x: 0, y: 0 }}
+                position={null}
+                grid={[25, 25]}
+                scale={1}
+                onStart={this.handleStart}
+                onDrag={this.handleDrag}
+                onStop={this.handleStop}
+              >
+                <div className="handle">{this.state.top}</div>
+              </Draggable>
+              <Draggable
+                axis="y"
+                handle=".handle"
+                defaultPosition={{ x: 0, y: 0 }}
+                position={null}
+                grid={[25, 25]}
+                scale={1}
+                onStart={this.handleStart}
+                onDrag={this.handleDrag}
+                onStop={this.handleStop}
+              >
+                <div className="handle bottom">{this.state.bottom}</div>
+              </Draggable>
               <img src={this.state.url} alt="changing image"></img>
             </div>
           </div>
